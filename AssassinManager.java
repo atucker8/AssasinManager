@@ -84,12 +84,15 @@ public AssassinManager(List<String> names){
         AssassinNode temp=new AssassinNode(name);
         temp.next=graveyard;
         graveyard=temp;
-            
+        current=front;
+        for(int i=0;i<sizeK;i++){
+            if(current.name.toLowerCase().equals(name.toLowerCase())){
+                current.next.killer=current.name;
+                sizeK--;
+                sizeG++;
+            }
+            current=current.next;
+
     }
-
-
-
-
-
-    //sizeK-- and sizeG++ in kill method
+}
 }
