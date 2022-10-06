@@ -9,21 +9,22 @@ public class AssassinManager {
 public AssassinManager(List<String> names){
     front=new AssassinNode(names.get(0));
     graveyard= new AssassinNode(null);
-    current=front;
     if(names.size()==0){
         throw new IllegalArgumentException();
     }
-        for(int i=1;i<=names.size();i++){
+        for(int i=1;i<names.size();i++){
             front.next=new AssassinNode(names.get(i));
+            front.next.killer=names.get(i-1);
             sizeK++;
         }
+        current=front;
     }
 
     public void printKillRing(){
         if(sizeK==1){
             System.out.print(front+" is stalking "+front);
         }
-        for(int i=0;i<sizeG;i++){
+        for(int i=0;i<sizeK;i++){
             System.out.print("    "+current.name);
             current=current.next;
          System.out.println(" is stalking "+current.name);
@@ -35,7 +36,7 @@ public AssassinManager(List<String> names){
         for(int i=0;i<sizeG;i++){
             System.out.print("    "+current.name);
             current=current.next;
-            System.out.println(" was killed by "+current.name);
+            System.out.println(" was killed by "+current.killer);
         }
        
     }
@@ -85,11 +86,12 @@ public AssassinManager(List<String> names){
         temp.next=graveyard;
         graveyard=temp;
         current=front;
-        for(int i=0;i<sizeK;i++){
-            if(current.name.toLowerCase().equals(name.toLowerCase())){
+        for(int i=0;i<sizeK-1;i++){
+            if(current.next.name.toLowerCase().equals(name.toLowerCase())){
                 current.next.killer=current.name;
                 sizeK--;
                 sizeG++;
+                current.next=current.next.next;
             }
             current=current.next;
 
