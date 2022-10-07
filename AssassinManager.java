@@ -12,15 +12,17 @@ public AssassinManager(List<String> names){
     if(names.size()==0){
         throw new IllegalArgumentException();
     }
+    current=front;
         for(int i=1;i<names.size();i++){
-            front.next=new AssassinNode(names.get(i));
-            front.next.killer=names.get(i-1);
+            current.next=new AssassinNode(names.get(i));
             sizeK++;
+            current=current.next;
         }
         current=front;
     }
 
     public void printKillRing(){
+        current=front;
         if(sizeK==1){
             System.out.print(front+" is stalking "+front);
         }
@@ -93,7 +95,10 @@ public AssassinManager(List<String> names){
                 sizeG++;
                 current.next=current.next.next;
             }
-            current=current.next;
+            else{
+                current=current.next;
+            }
+            
 
     }
 }
