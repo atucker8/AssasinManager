@@ -36,9 +36,8 @@ public AssassinManager(List<String> names){
     public void printGraveyard(){
         current=graveyard;
         for(int i=0;i<sizeG;i++){
-            System.out.print("    "+current.name);
+            System.out.println("    "+current.name+" was killed by "+current.killer);
             current=current.next;
-            System.out.println(" was killed by "+current.killer);
         }
        
     }
@@ -84,16 +83,17 @@ public AssassinManager(List<String> names){
         if(killRingContains(name)==false){
             throw new IllegalArgumentException();
         }
-        AssassinNode temp=new AssassinNode(name);
-        temp.next=graveyard;
-        graveyard=temp;
+        AssassinNode temp;
         current=front;
         for(int i=0;i<sizeK-1;i++){
             if(current.next.name.toLowerCase().equals(name.toLowerCase())){
                 current.next.killer=current.name;
                 sizeK--;
                 sizeG++;
+                temp=current.next;
                 current.next=current.next.next;
+                temp.next=graveyard;
+                graveyard=temp;
             }
             else{
                 current=current.next;
