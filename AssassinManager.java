@@ -61,6 +61,7 @@ public AssassinManager(List<String> names){
             if(current.name.toLowerCase().equals(name.toLowerCase())){
                 yn=true;
             }
+            current=current.next;
         }
         return yn;
     }
